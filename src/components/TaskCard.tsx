@@ -26,19 +26,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleComplete, onDe
     }
   };
 
-  const getPriorityLabel = (priority: string) => {
-    switch (priority) {
-      case 'P1':
-        return 'High Priority';
-      case 'P2':
-        return 'Medium Priority';
-      case 'P3':
-        return 'Normal Priority';
-      default:
-        return priority;
-    }
-  };
-
   return (
     <Card className={`border-0 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${
       task.completed 
@@ -50,7 +37,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleComplete, onDe
           {/* Priority Badge */}
           <div className="flex justify-between items-start">
             <Badge className={`${getPriorityColor(task.priority)} font-medium px-3 py-1`}>
-              {getPriorityLabel(task.priority)}
+              {task.priority}
             </Badge>
             {task.completed && (
               <Badge className="bg-green-100 text-green-800 border-green-200">

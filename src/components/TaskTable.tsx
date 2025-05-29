@@ -27,19 +27,6 @@ export const TaskTable: React.FC<TaskTableProps> = ({ tasks, onToggleComplete, o
     }
   };
 
-  const getPriorityLabel = (priority: string) => {
-    switch (priority) {
-      case 'P1':
-        return 'High Priority';
-      case 'P2':
-        return 'Medium Priority';
-      case 'P3':
-        return 'Normal Priority';
-      default:
-        return priority;
-    }
-  };
-
   return (
     <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm">
       <CardHeader>
@@ -81,7 +68,7 @@ export const TaskTable: React.FC<TaskTableProps> = ({ tasks, onToggleComplete, o
                   </TableCell>
                   <TableCell>
                     <Badge className={`${getPriorityColor(task.priority)} font-medium`}>
-                      {getPriorityLabel(task.priority)}
+                      {task.priority}
                     </Badge>
                   </TableCell>
                   <TableCell>
