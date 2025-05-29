@@ -43,6 +43,9 @@ function extractTaskFromSentence(sentence: string): ParsedTask | null {
     // "Name please do X by deadline"
     /(\w+)\s+please\s+(?:take|do|handle|work on|complete|finish|review|prepare|create|build|design|develop|write|update|fix|check|test|implement|research|analyze|contact|call|email|follow[\s-]?up|follow\s+up\s+on)\s+(?:the\s+)?(.+?)\s+(?:by|until|before|due)\s+(.+)/i,
     
+    // "Name please do X tonight/today/tomorrow" (time-based deadlines)
+    /(\w+)\s+please\s+(?:take|do|handle|work on|complete|finish|review|prepare|create|build|design|develop|write|update|fix|check|test|implement|research|analyze|contact|call|email|follow[\s-]?up|follow\s+up\s+on)\s+(?:the\s+)?(.+?)\s+(tonight|today|tomorrow|this\s+week|next\s+week|this\s+morning|this\s+afternoon|this\s+evening)/i,
+    
     // "Name, you take X by deadline"
     /(\w+),?\s+you\s+(?:take|do|handle|work on|complete|finish|review|prepare|create|build|design|develop|write|update|fix|check|test|implement|research|analyze|contact|call|email|follow[\s-]?up|follow\s+up\s+on)\s+(?:the\s+)?(.+?)\s+(?:by|until|before|due)\s+(.+)/i,
     
@@ -53,7 +56,10 @@ function extractTaskFromSentence(sentence: string): ParsedTask | null {
     /(\w+)\s*[-–]\s*(?:take|do|handle|work on|complete|finish|review|prepare|create|build|design|develop|write|update|fix|check|test|implement|research|analyze|contact|call|email|follow[\s-]?up|follow\s+up\s+on)\s+(?:the\s+)?(.+?)\s+(?:by|until|before|due)\s+(.+)/i,
 
     // "Name needs to/should X by deadline"
-    /(\w+)\s+(?:needs?\s+to|should|must|has\s+to)\s+(?:take|do|handle|work on|complete|finish|review|prepare|create|build|design|develop|write|update|fix|check|test|implement|research|analyze|contact|call|email|follow[\s-]?up|follow\s+up\s+on)\s+(?:the\s+)?(.+?)\s+(?:by|until|before|due)\s+(.+)/i
+    /(\w+)\s+(?:needs?\s+to|should|must|has\s+to)\s+(?:take|do|handle|work on|complete|finish|review|prepare|create|build|design|develop|write|update|fix|check|test|implement|research|analyze|contact|call|email|follow[\s-]?up|follow\s+up\s+on)\s+(?:the\s+)?(.+?)\s+(?:by|until|before|due)\s+(.+)/i,
+
+    // "Name X tonight/today/tomorrow" (simple time-based)
+    /(\w+)\s+(?:take|do|handle|work on|complete|finish|review|prepare|create|build|design|develop|write|update|fix|check|test|implement|research|analyze|contact|call|email|follow[\s-]?up|follow\s+up\s+on)\s+(?:the\s+)?(.+?)\s+(tonight|today|tomorrow|this\s+week|next\s+week|this\s+morning|this\s+afternoon|this\s+evening)/i
   ];
 
   for (const pattern of patterns) {

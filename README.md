@@ -1,73 +1,173 @@
-# Welcome to your Lovable project
 
-## Project info
+# AI Meeting Minutes to Task Converter
 
-**URL**: https://lovable.dev/projects/3a6ec50b-9f70-43cc-bcf9-f952a6cd18a1
+A modern, AI-powered web application that transforms meeting transcripts into actionable tasks with intelligent parsing and beautiful task management interface.
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+- **AI-Powered Transcript Parsing**: Automatically extract tasks, assignees, deadlines, and priorities from meeting transcripts
+- **Dual View Modes**: Toggle between card view and table view for different task visualization needs
+- **Smart Task Detection**: Handles various formats of task assignments in natural language
+- **Priority Management**: Automatic priority detection (P1/High, P2/Medium, P3/Normal) with color-coded badges
+- **Task Management**: Complete, reopen, and delete tasks with real-time updates
+- **Responsive Design**: Optimized for both desktop and mobile devices
+- **Modern UI**: Clean, intuitive interface with gradient backgrounds and smooth animations
 
-**Use Lovable**
+## 📋 Task Extraction Examples
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3a6ec50b-9f70-43cc-bcf9-f952a6cd18a1) and start prompting.
+The AI parser can understand various formats:
 
-Changes made via Lovable will be committed automatically to this repo.
+```
+"Aman you take the landing page by 10pm tomorrow"
+→ Task: landing page | Assignee: Aman | Deadline: 10pm tomorrow | Priority: P3
 
-**Use your preferred IDE**
+"Rajeev you take care of client follow-up by Wednesday"
+→ Task: client follow-up | Assignee: Rajeev | Deadline: Wednesday | Priority: P3
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+"Shreya please review the marketing deck tonight"
+→ Task: marketing deck | Assignee: Shreya | Deadline: tonight | Priority: P3
 ```
 
-**Edit a file directly in GitHub**
+## 🛠️ Setup Instructions
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Prerequisites
 
-**Use GitHub Codespaces**
+- Node.js (v18 or higher)
+- npm or yarn package manager
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Installation
 
-## What technologies are used for this project?
+1. **Clone the repository**
+   ```bash
+   git clone <your-repository-url>
+   cd ai-meeting-minutes
+   ```
 
-This project is built with:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-## How can I deploy this project?
+4. **Open your browser**
+   Navigate to `http://localhost:5173` to see the application
 
-Simply open [Lovable](https://lovable.dev/projects/3a6ec50b-9f70-43cc-bcf9-f952a6cd18a1) and click on Share -> Publish.
+### Build for Production
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+npm run build
+```
 
-Yes, you can!
+## 🎯 Usage
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. **Paste Meeting Transcript**: Copy your meeting transcript into the text area
+2. **Parse Tasks**: Click "Parse Tasks" to automatically extract actionable items
+3. **View Tasks**: Switch between card view and table view using the toggle buttons
+4. **Manage Tasks**: 
+   - Mark tasks as complete/incomplete
+   - Delete tasks that are no longer needed
+   - Add manual tasks using the "Add Manual Task" button
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🏗️ Technology Stack
+
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with custom gradients and animations
+- **UI Components**: Shadcn/UI component library
+- **Icons**: Lucide React
+- **State Management**: React Hooks (useState)
+- **Notifications**: Custom toast system
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── ui/              # Shadcn/UI components
+│   ├── TaskCard.tsx     # Individual task card component
+│   ├── TaskTable.tsx    # Table view for tasks
+│   └── AddTaskForm.tsx  # Form for manual task creation
+├── utils/
+│   └── transcriptParser.ts  # AI parsing logic
+├── pages/
+│   └── Index.tsx        # Main application page
+├── hooks/
+│   └── use-toast.ts     # Toast notification hook
+└── lib/
+    └── utils.ts         # Utility functions
+```
+
+## 🎨 Design Features
+
+- **Color-coded Priorities**: 
+  - 🔴 P1 (High): Red badges for urgent tasks
+  - 🟡 P2 (Medium): Yellow badges for important tasks  
+  - 🔵 P3 (Normal): Blue badges for regular tasks
+- **Responsive Layout**: Adapts to different screen sizes
+- **Smooth Animations**: Hover effects and transitions
+- **Modern Gradients**: Purple-to-blue gradient theme
+- **Glass Morphism**: Semi-transparent cards with backdrop blur
+
+## 🔧 Configuration
+
+The transcript parser can be customized by modifying the patterns in `src/utils/transcriptParser.ts`. You can add new regex patterns to handle different formats of task assignments.
+
+## 📱 Screenshots
+
+### Desktop View - Card Layout
+![Card View Desktop](screenshots/desktop-cards.png)
+
+### Desktop View - Table Layout  
+![Table View Desktop](screenshots/desktop-table.png)
+
+### Mobile View
+![Mobile View](screenshots/mobile-view.png)
+
+### Task Parsing Demo
+![Parsing Demo](screenshots/parsing-demo.png)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🚀 Deployment
+
+This project can be easily deployed to:
+- **Vercel**: Connect your GitHub repository for automatic deployments
+- **Netlify**: Drag and drop the build folder or connect via Git
+- **GitHub Pages**: Use the build output for static hosting
+
+### Deploy to Vercel
+```bash
+npm run build
+npx vercel --prod
+```
+
+## ⚡ Performance
+
+- **Bundle Size**: Optimized with tree-shaking and code splitting
+- **Loading Speed**: Fast initial load with minimal dependencies
+- **Responsive**: Smooth interactions on all device sizes
+- **Memory Efficient**: Clean component lifecycle management
+
+## 🔮 Future Enhancements
+
+- [ ] Integration with calendar applications
+- [ ] Export tasks to popular project management tools
+- [ ] Voice-to-text transcript input
+- [ ] Team collaboration features
+- [ ] Advanced priority detection with NLP
+- [ ] Task dependencies and subtasks
+- [ ] Due date reminders and notifications

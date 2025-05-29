@@ -4,9 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Plus, Check, Trash2, User, Clock } from 'lucide-react';
+import { Calendar, Plus, Check, Clock, List, LayoutGrid } from 'lucide-react';
 import { parseTranscript } from '@/utils/transcriptParser';
 import { TaskCard } from '@/components/TaskCard';
+import { TaskTable } from '@/components/TaskTable';
 import { AddTaskForm } from '@/components/AddTaskForm';
 import { useToast } from '@/hooks/use-toast';
 
@@ -24,6 +25,7 @@ const Index = () => {
   const [transcript, setTranscript] = useState('');
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
   const { toast } = useToast();
 
   const handleParseTranscript = () => {
@@ -189,68 +191,101 @@ const Index = () => {
           </div>
         )}
 
-        {/* Task Board */}
-        <div className="space-y-8">
-          {/* Active Tasks */}
-          {activeTasks.length > 0 && (
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                <Clock className="h-6 w-6 text-blue-600" />
-                Active Tasks ({activeTasks.length})
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {activeTasks.map(task => (
-                  <TaskCard
-                    key={task.id}
-                    task={task}
-                    onToggleComplete={handleToggleComplete}
-                    onDelete={handleDeleteTask}
-                  />
-                ))}
-              </div>
+        {/* View Toggle and Tasks */}
+        {tasks.length > 0 && (
+          <div className="space-y-6">
+            {/* View Mode Toggle */}
+            <div className="flex justify-center gap-2">
+              <Button
+                variant={viewMode === 'cards' ? 'default' : 'outline'}
+                onClick={() => setViewMode('cards')}
+                className="flex items-center gap-2"
+              >
+                <LayoutGrid className="h-4 w-4" />
+                Card View
+              </Button>
+              <Button
+                variant={viewMode === 'table' ? 'default' : 'outline'}
+                onClick={() => setViewMode('table')}
+                className="flex items-center gap-2"
+              >
+                <List className="h-4 w-4" />
+                Table View
+              </Button>
             </div>
-          )}
 
-          {/* Completed Tasks */}
-          {completedTasks.length > 0 && (
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                <Check className="h-6 w-6 text-green-600" />
-                Completed Tasks ({completedTasks.length})
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {completedTasks.map(task => (
-                  <TaskCard
-                    key={task.id}
-                    task={task}
-                    onToggleComplete={handleToggleComplete}
-                    onDelete={handleDeleteTask}
-                  />
-                ))}
+            {/* Task Display */}
+            {viewMode === 'table' ? (
+              <TaskTable
+                tasks={tasks}
+                onToggleComplete={handleToggleComplete}
+                onDelete={handleDeleteTask}
+              />
+            ) : (
+              <div className="space-y-8">
+                {/* Active Tasks */}
+                {activeTasks.length > 0 && (
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                      <Clock className="h-6 w-6 text-blue-600" />
+                      Active Tasks ({activeTasks.length})
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {activeTasks.map(task => (
+                        <TaskCard
+                          key={task.id}
+                          task={task}
+                          onToggleComplete={handleToggleComplete}
+                          onDelete={handleDeleteTask}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Completed Tasks */}
+                {completedTasks.length > 0 && (
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                      <Check className="h-6 w-6 text-green-600" />
+                      Completed Tasks ({completedTasks.length})
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {completedTasks.map(task => (
+                        <TaskCard
+                          key={task.id}
+                          task={task}
+                          onToggleComplete={handleToggleComplete}
+                          onDelete={handleDeleteTask}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        )}
 
-          {/* Empty State */}
-          {tasks.length === 0 && (
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-              <CardContent className="p-12 text-center">
-                <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">No tasks yet</h3>
-                <p className="text-gray-500 mb-6">
-                  Parse a meeting transcript or add tasks manually to get started
-                </p>
-                <Button 
-                  onClick={() => setShowAddForm(true)}
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Your First Task
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+        {/* Empty State */}
+        {tasks.length === 0 && (
+          <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+            <CardContent className="p-12 text-center">
+              <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">No tasks yet</h3>
+              <p className="text-gray-500 mb-6">
+                Parse a meeting transcript or add tasks manually to get started
+              </p>
+              <Button 
+                onClick={() => setShowAddForm(true)}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Your First Task
+              </Button>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
